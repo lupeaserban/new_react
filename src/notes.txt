@@ -1,0 +1,15 @@
+"properties":
+    "week1ofmon":"Y",
+    "week2ofmon":"N",
+    "week3ofmon":"N",
+    "week4ofmon":"N",
+    "week5ofmon":"N",
+    "zip_code":"94127",
+    "corridor":"Corona St",
+    "holidays":"N",
+    "nhood":"Ingleside Terrace",
+    "streetname":"CORONA ST",
+    "weekday":"Fri",
+    "fromhour":"12:00",
+    "tohour":"14:00",
+    "geometry":
