@@ -9,8 +9,10 @@ mapboxgl.accessToken =
 export default class Map extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-
+    let rightNow = this.getTheDayAndWeek();
+    this.state = {
+      rightNow: rightNow
+    };
     this.showLayer = this.showLayer.bind(this);
     this.hideLayer = this.hideLayer.bind(this);
     this.toggleLayer = this.toggleLayer.bind(this);
@@ -23,7 +25,15 @@ export default class Map extends React.Component {
     let firstDay = new Date(d.getFullYear(), d.getMonth(), 1).getDay();
     let week = Math.ceil((d.getDate() + firstDay) / 7);
     let weekofmon = "week" + week + "ofmon";
-
+    
+    if (d.toString().split(" ")[0] === "Tue") {
+      return {
+        weekofmon: weekofmon,
+        hour: hour,
+        dayName: "Tues",
+        date: d
+      };
+    }
     return {
       weekofmon: weekofmon,
       hour: hour,
@@ -32,15 +42,19 @@ export default class Map extends React.Component {
     };
   }
 
-  // getDerivedstatefromprops {
+
   //   get date and get hour and pass them into state
-  // }
+
+  // static getDerivedStateFromProps(props, state) {
+  //   let rightNow = this.getTheDayAndWeek();
+  //   return {
+  //     rightNow: rightNow
+  //   };
+  // } 
+   
 
   componentDidMount() {
-    const rightNow = this.getTheDayAndWeek();
-    window.alert("This is street sweeper for today, " + rightNow.date);
-    console.log(rightNow);
-
+    const { rightNow } = this.state;
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: "mapbox://styles/lupeaserban/cjfbyjjtv04362rpavlr7edsx",
@@ -61,7 +75,8 @@ export default class Map extends React.Component {
         filter: [
           "all",
           ["==", "weekday", rightNow.dayName],
-          ["==", rightNow.weekofmon, "Y"]
+          ["==", rightNow.weekofmon, "Y"],
+          ["==", "fromhour", "11:00"]
         ],
         paint: {
           "line-width": 1.4,
@@ -131,15 +146,36 @@ export default class Map extends React.Component {
       bottom: 0,
       width: "100%"
     };
-
+   console.log(this.state.rightNow)
     return (
       <div>
         <div style={style} ref={el => (this.mapContainer = el)} />
         <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <Dropdown labelName="Select a day" toggleLayer={this.toggleLayer} />
-          <Dropdown labelName="Select hours" />
+          <Dropdown realName = {this.state.rightNow.dayName} labelName="Select Day" toggleLayer={this.toggleLayer} />
+          <Dropdown realName = {this.state.rightNow.hour }labelName="Select hours" toggleLayer = {this.toggleLayer}/>
         </div>
       </div>
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

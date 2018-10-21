@@ -42,7 +42,7 @@ export default class Dropdown extends React.Component {
   }
 
   render() {
-    const { toggleLayer, labelName } = this.props;
+    const { toggleLayer, labelName, realName} = this.props;
     const { name, backgroundColor, displayMenu } = this.state;
     return (
       <div
@@ -63,7 +63,7 @@ export default class Dropdown extends React.Component {
           onClick={this.showDropdownMenu}
           style={{ cursor: "pointer" }}
         >
-          {name}
+          {realName ? realName : name}
         </div>
 
         {displayMenu ? (
